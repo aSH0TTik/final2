@@ -141,10 +141,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.mail.ru'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'djangokup@mail.ru'  # Полный email
-EMAIL_HOST_PASSWORD = 'LwM6lKdve9E814uciMz5'
-DEFAULT_FROM_EMAIL = 'djangokup@mail.ru'
-ADMIN_EMAIL = 'djangokup@mail.ru'
+EMAIL_HOST_USER = 'email@mail.ru'  # Полный email
+EMAIL_HOST_PASSWORD = 'password'
+DEFAULT_FROM_EMAIL = 'email'
+ADMIN_EMAIL = 'email@mail.ru'
 
 # Для разработки (отправка в консоль):
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

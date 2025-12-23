@@ -1,0 +1,76 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Главная - PC Shop{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <h1>PC Shop</h1>
+    <p>Готовые сборки ПК для геймеров, работы и творчества. Мощные, стильные, с RGB-подсветкой!</p>
+    <a href="{% url 'catalog' %}"><button>Перейти в каталог</button></a>
+</section>
+
+<!-- Слайдер популярных сборок -->
+<section class="slider-section">
+    <h2>Популярные сборки</h2>
+
+    <div class="slider-container">
+        <div class="slider-wrapper" id="slider-wrapper">
+            {% for product in popular_products %}
+            <div class="slide-new">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% else %}
+                <img src="{% static 'images/no_image.jpg' %}" alt="{{ product.name }}">
+                {% endif %}
+
+                <div class="slide-overlay-new">
+                    <h3>{{ product.name }}</h3>
+                    <p>{{ product.description|truncatewords:30 }}</p>
+                    <strong>{{ product.price }} ₽</strong>
+
+                    <!-- Кнопка В корзину в слайдере -->
+                    <button onclick="addToCart({{ product.id }})" style="margin-top: 20px; background: linear-gradient(to right, #00ffcc, #ff5722); padding: 12px 30px; font-size: 18px; border: none; border-radius: 50px; cursor: pointer;">
+                        В корзину
+                    </button>
+
+                    <!-- Кнопка Подробнее остаётся -->
+                    <a href="{% url 'product_detail' product.id %}">
+                        <button style="margin-top: 20px; margin-left: 10px;">Подробнее</button>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Стрелки -->
+        <div class="prev" onclick="changeSlide(-1)">❮</div>
+        <div class="next" onclick="changeSlide(1)">❯</div>
+    </div>
+
+    <!-- Точки индикаторы -->
+    <div class="dots">
+        {% for product in popular_products %}
+        <span class="dot" onclick="currentSlide({{ forloop.counter0 }})"></span>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Блок с последними новостями -->
+<section style="max-width: 1200px; margin: 0 auto;">
+    <h2 style="text-align: center; color: #00ffcc; font-family: 'Orbitron', sans-serif; font-size: 48px;">Последние новости</h2>
+
+    <div class="news-grid">
+        {% for news in news_list %}
+        <div class="news-card">
+            <h4>{{ news.title }}</h4>
+            <small>{{ news.date|date:"d.m.Y" }}</small>
+            <p>{{ news.content|truncatewords:40 }}</p>
+            <a href="{% url 'news' %}" style="color: #ff5722;">Читать полностью →</a>
+        </div>
+        {% empty %}
+        <p style="grid-column: 1 / -1; text-align: center;">Новостей пока нет.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

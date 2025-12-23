@@ -1,0 +1,17 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Оформление заказа{% endblock %}
+
+{% block content %}
+<h2>Оформление заказа</h2>
+<p>Общая сумма: {{ cart.get_total_price }} ₽</p>
+
+<form method="post">
+    {% csrf_token %}
+    <p>Подтвердите оформление заказа:</p>
+    <button type="submit">Подтвердить заказ</button>
+</form>
+
+<p><a href="{% url 'cart_detail' %}">← Вернуться в корзину</a></p>
+{% endblock %}

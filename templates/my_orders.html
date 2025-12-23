@@ -1,0 +1,37 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Мои заказы{% endblock %}
+
+{% block content %}
+<h2>Мои заказы</h2>
+    {% if orders %}
+<table style="width:100%; border-collapse: collapse;">
+    <tr style="background: #eee;">
+        <th>Номер</th>
+        <th>Дата</th>
+        <th>Статус</th>
+        <th>Сумма</th>
+        <th>Товары</th>
+    </tr>
+    {% for order in orders %}
+    <tr>
+        <td>{{ order.id }}</td>
+        <td>{{ order.created_at|date:"d.m.Y H:i" }}</td>
+        <td>{{ order.get_status_display }}</td>
+        <td>{{ order.total_price }} ₽</td>
+        <td>
+            <ul>
+                {% for item in order.items.all %}
+                <li>{{ item.product.name }} × {{ item.quantity }} = {{ item.price|floatformat:2 }} ₽</li>
+                {% endfor %}
+            </ul>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+    {% else %}
+<p>У вас пока нет заказов.</p>
+    {% endif %}
+<p><a href="{% url 'catalog' %}">← В каталог</a></p>
+{% endblock %}

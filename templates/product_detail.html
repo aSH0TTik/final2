@@ -1,0 +1,67 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+{% load cart_extras %}
+
+{% block title %}{{ product.name }} - PC Shop{% endblock %}
+
+{% block content %}
+<div style="max-width: 1200px; margin: 0 auto; padding: 40px;">
+    <div style="display: flex; gap: 40px;">
+        <!-- Фото товара -->
+        <div style="flex: 1;">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 100%; max-width: 600px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+            {% else %}
+            <img src="{% static 'images/no_image.jpg' %}" alt="{{ product.name }}" style="width: 100%; max-width: 600px; border-radius: 15px;">
+            {% endif %}
+        </div>
+
+        <!-- Описание и кнопки -->
+        <div style="flex: 1; padding: 20px;">
+            <h1 style="color: #00ffcc; font-family: 'Orbitron', sans-serif; font-size: 36px; margin-bottom: 20px;">
+                {{ product.name }}
+            </h1>
+
+            <p style="font-size: 24px; color: #ff5722; margin: 20px 0;">
+                <strong>{{ product.price }} ₽</strong>
+            </p>
+
+            <div style="background: rgba(30, 42, 56, 0.8); padding: 25px; border-radius: 15px; margin: 20px 0;">
+                <h3 style="color: #00ffcc; margin-top: 0;">Характеристики:</h3>
+                <p style="line-height: 1.8; color: #e0e0e0;">{{ product.description }}</p>
+            </div>
+
+            <!-- Кнопки -->
+            <div style="text-align: center; margin: 40px 0;" data-product-id="{{ product.id }}">
+                <!-- Блок с + / – (скрыт по умолчанию) -->
+                <div class="quantity-buttons" style="display: none; align-items: center; background: rgba(30, 42, 56, 0.8); padding: 15px 30px; border-radius: 50px;">
+                    <button onclick="changeQty(this, -1)" style="font-size: 36px; background: none; border: none; color: #ff5722; cursor: pointer; padding: 0 20px;">–</button>
+                    <strong class="qty-number" style="font-size: 40px; color: #00ffcc; margin: 0 30px;">1</strong>
+                    <button onclick="changeQty(this, 1)" style="font-size: 36px; background: none; border: none; color: #00ffcc; cursor: pointer; padding: 0 20px;">+</button>
+                </div>
+
+                <!-- Кнопка "В корзину" (показывается по умолчанию) -->
+                <button class="add-to-cart-btn" onclick="addToCart({{ product.id }})" style="background: linear-gradient(to right, #00ffcc, #ff5722); padding: 20px 60px; font-size: 24px; border: none; border-radius: 50px; color: white; cursor: pointer;">
+                    В корзину
+                </button>
+            </div>
+
+            <!-- Кнопка Назад -->
+            <a href="{% url 'catalog' %}" style="background: #666; color: white; padding: 15px 40px; text-decoration: none; border-radius: 50px; display: inline-block;">
+                ← Назад к каталогу
+            </a>
+        </div>
+
+        <div style="background: rgba(0, 255, 204, 0.1); padding: 20px; border-radius: 10px; margin-top: 30px;">
+            <h4 style="color: #00ffcc; margin-top: 0;">Почему выбирают нас?</h4>
+            <ul style="color: #e0e0e0;">
+                <li>✅ Готовые сборки с гарантией 3 года</li>
+                <li>✅ Бесплатная доставка по Пскову</li>
+                <li>✅ Профессиональная сборка</li>
+                <li>✅ RGB-подсветка на все компоненты</li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

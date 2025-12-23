@@ -1,0 +1,97 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Обратная связь{% endblock %}
+
+{% block content %}
+<div class="feedback-container" style="max-width: 800px; margin: 0 auto;">
+    <h2>Обратная связь</h2>
+
+    <p>Если у вас есть вопросы, предложения или замечания, заполните форму ниже. Мы обязательно ответим вам.</p>
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}" style="padding: 15px; margin: 20px 0; border-radius: 5px; background: {% if message.tags == 'success' %}#d4edda{% else %}#f8d7da{% endif %}; color: {% if message.tags == 'success' %}#155724{% else %}#721c24{% endif %};">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="post" class="feedback-form" style="background: #f9f9f9; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        {% csrf_token %}
+
+        <div class="form-group" style="margin-bottom: 20px;">
+            <label for="id_name" style="display: block; margin-bottom: 5px; font-weight: bold;">Имя *</label>
+            {{ form.name }}
+            {% if form.name.errors %}
+            <div class="error" style="color: red; font-size: 0.9em; margin-top: 5px;">
+                {{ form.name.errors }}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group" style="margin-bottom: 20px;">
+            <label for="id_email" style="display: block; margin-bottom: 5px; font-weight: bold;">Email *</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+            <div class="error" style="color: red; font-size: 0.9em; margin-top: 5px;">
+                {{ form.email.errors }}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group" style="margin-bottom: 20px;">
+            <label for="id_phone" style="display: block; margin-bottom: 5px; font-weight: bold;">Телефон</label>
+            {{ form.phone }}
+            <small style="display: block; color: #666; margin-top: 5px;">Необязательно</small>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 20px;">
+            <label for="id_subject" style="display: block; margin-bottom: 5px; font-weight: bold;">Тема *</label>
+            {{ form.subject }}
+            {% if form.subject.errors %}
+            <div class="error" style="color: red; font-size: 0.9em; margin-top: 5px;">
+                {{ form.subject.errors }}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group" style="margin-bottom: 25px;">
+            <label for="id_message" style="display: block; margin-bottom: 5px; font-weight: bold;">Сообщение *</label>
+            {{ form.message }}
+            {% if form.message.errors %}
+            <div class="error" style="color: red; font-size: 0.9em; margin-top: 5px;">
+                {{ form.message.errors }}
+            </div>
+            {% endif %}
+        </div>
+
+        <button type="submit" style="background: #007bff; color: white; padding: 12px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; transition: background 0.3s;">
+            Отправить сообщение
+        </button>
+    </form>
+
+    <div class="contact-info" style="margin-top: 40px; padding: 20px; background: #f0f8ff; border-radius: 10px;">
+        <h3 style="color: #007bff;">Другие способы связи</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+            <div class="contact-item">
+                <h4 style="color: #333;">Телефон</h4>
+                <p style="font-size: 18px; color: #007bff;">+7 (996) 134-93-74</p>
+                <p style="color: #666;">Пн-Пт: 9:00-18:00</p>
+            </div>
+            <div class="contact-item">
+                <h4 style="color: #333;">Email</h4>
+                <p style="font-size: 18px; color: #007bff;">kupaloff@vk.com</p>
+                <p style="color: #666;">Ответим в течение 24 часов</p>
+            </div>
+            <div class="contact-item">
+                <h4 style="color: #333;">Адрес</h4>
+                <p style="font-size: 16px; color: #333;">г. Псков</p>
+                <p style="color: #666;">Офис открыт по предварительной записи</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

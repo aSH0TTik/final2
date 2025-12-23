@@ -1,0 +1,48 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Корзина{% endblock %}
+
+{% block content %}
+<h2>Ваша корзина</h2>
+    {% if cart %}
+<table style="width:100%; border-collapse: collapse;">
+    <tr style="background: #eee;">
+        <th>Товар</th>
+        <th>Цена</th>
+        <th>Количество</th>
+        <th>Сумма</th>
+        <th>Действия</th>
+    </tr>
+    {% for item in cart %}
+    <tr data-product-id="{{ item.product.id }}">
+        <td>{{ item.product.name }}</td>
+        <td>{{ item.price }} ₽</td>
+        <td style="text-align: center;">
+            <div style="display: inline-flex; align-items: center; background: rgba(30, 42, 56, 0.8); padding: 10px 20px; border-radius: 50px;">
+                <button onclick="changeQty(this, -1)" style="font-size: 28px; background: none; border: none; color: #ff5722; cursor: pointer; padding: 0 15px;">–</button>
+                <strong class="qty-number" style="font-size: 32px; color: #00ffcc; margin: 0 20px;">{{ item.quantity }}</strong>
+                <button onclick="changeQty(this, 1)" style="font-size: 28px; background: none; border: none; color: #00ffcc; cursor: pointer; padding: 0 15px;">+</button>
+            </div>
+        </td>
+        <td><strong>{{ item.total_price }} ₽</strong></td>
+        <td>
+            <button onclick="changeQty(this, -{{ item.quantity }})" style="background: #ff5722; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer;">
+                Удалить
+            </button>
+        </td>
+    </tr>
+    {% endfor %}
+    <tr>
+        <td colspan="3"><strong>Итого:</strong></td>
+        <td><strong>{{ cart.get_total_price }} ₽</strong></td>
+        <td></td>
+    </tr>
+</table>
+
+<p><a href="{% url 'order_create' %}"><button>Оформить заказ</button></a></p>
+    {% else %}
+<p>Корзина пуста.</p>
+    {% endif %}
+<p><a href="{% url 'catalog' %}">← Вернуться в каталог</a></p>
+{% endblock %}

@@ -1,0 +1,17 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Новости{% endblock %}
+
+{% block content %}
+<h2>Все новости</h2>
+    {% for news in news_list %}
+<div style="border-bottom: 1px solid #ccc; padding: 20px 0;">
+    <h3>{{ news.title }}</h3>
+    <p><small>{{ news.date|date:"d.m.Y" }}</small></p>
+    <p>{{ news.content }}</p>
+</div>
+    {% empty %}
+<p>Новостей пока нет.</p>
+    {% endfor %}
+{% endblock %}
